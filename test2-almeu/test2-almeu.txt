@@ -1,0 +1,20 @@
+SELECT * FROM Student;
+SELECT * FROM Profesor;
+SELECT * FROM Contract;
+SELECT * FROM Curs;
+SELECT * FROM Sala;
+
+--ex1
+
+SELECT p.pid,p.nume,f.tel
+    FROM Profesor p JOIN Facultate f ON p.fid=f.fid WHERE p.nume NOT LIKE 'C%';
+
+--ex2
+
+SELECT s.sid,c.titlu,c.zi
+    FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid WHERE c.zi NOT LIKE 'Luni' AND c.zi NOT LIKE 'Vineri';
+
+--ex3
+
+SELECT s.sid,s.nume,c.titlu,p.pid
+    FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid JOIN Profesor p ON c.pid=p.pid WHERE p.pid='PAC001';
