@@ -1,0 +1,68 @@
+SELECT * FROM Student;
+SELECT * FROM Profesor;
+SELECT * FROM Facultate;
+SELECT * FROM Curs;
+SELECT * FROM Sala;
+SELECT * FROM Contract;
+
+--ex1
+
+SELECT p.nume,c.titlu,sl.nrlocuri
+    FROM Profesor p JOIN Curs c ON p.pid=c.pid JOIN Sala sl ON c.sala=sl.cods WHERE sl.nrlocuri BETWEEN 50 AND 250;
+
+--ex6
+
+SELECT titlu,cid,zi
+    FROM Curs WHERE fid IN ('AC','ET') AND zi IN (SELECT zi FROM Curs WHERE titlu='Fizica');
+
+--ex25
+
+SELECT s.sid,c.titlu,sl.etaj
+    FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid JOIN Sala sl ON c.sala=sl.cods WHERE sl.etaj=2 OR sl.etaj=3 ORDER BY s.sid;
+
+--ex26 -- la fel ca 1, dar l am mai facut eu o data sa ma testez
+
+SELECT p.nume,c.titlu,sl.nrlocuri
+    FROM Profesor p JOIN Curs c ON p.pid=c.pid JOIN Sala sl ON c.sala=sl.cods WHERE sl.nrlocuri BETWEEN 50 AND 250;
+
+--ex28
+
+SELECT p.pid,p.nume,f.tel
+    FROM Profesor p JOIN Facultate f ON p.fid=f.fid WHERE p.nume NOT LIKE  '%C';
+
+--ex29
+
+SELECT s.sid,s.nume,p.pid,c.titlu
+    FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid JOIN Profesor p ON c.pid=p.pid WHERE p.pid='PAC001';
+
+--ex30
+
+SELECT s.sid,c.titlu,c.zi
+    FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid WHERE c.zi NOT LIKE 'Luni' AND c.zi NOT LIKE 'Vineri';
+
+--ex32
+
+SELECT s.nume,f.nume,s.bursa
+    FROM Student s JOIN Facultate f ON s.fid=f.fid WHERE s.bursa>500;
+
+--ex33 la fel ca 28
+
+--ex35 la fel ca 32
+
+--ex36 la fel ca 1
+
+--ex39 la fel ca 29
+
+
+--ex40 
+
+SELECT s.nume,f.fid,s.datan
+    FROM Facultate f JOIN Student s ON f.fid=s.fid WHERE (extract(year from SYSDATE)-extract(year from datan))<21;
+
+
+--ex41 la fel ca 40
+
+--ex93 la fel ca 25
+
+--ex171 la fel ca 40
+
