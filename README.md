@@ -1,9 +1,9 @@
 # **PARCURSUL MEU LA BAZE DE DATE**
 
-##SQL
+## SQL
 
 Folosim Oracle Apex!
 
-##Aprecieri
+## Aprecieri
 
 Sper ca materialele mele sa dovedeasca dedicarea mea la aceasta materie si sa ajute in continuare!
