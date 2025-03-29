@@ -1,0 +1,42 @@
+SELECT * FROM Student;
+
+
+--ex1 -> p.1
+
+SELECT c.titlu,c.cid,c.zi FROM Curs c WHERE c.fid IN ('AC','ET') AND c.zi IN (SELECT zi FROM Curs WHERE titlu='Fizica'); 
+
+--ex2 -> p.2
+
+SELECT p.nume,p.datan FROM Profesor p WHERE (fid='MEC' OR fid='AC') AND p.datan<(SELECT datan from Profesor WHERE nume LIKE 'Raul Brad');
+
+--ex3 -> p.2
+
+SELECT s.sid,s.nume,s.an FROM Student s WHERE s.an=1 AND s.fid NOT IN(SELECT titlu FROM Curs WHERE titlu LIKE 'Limbaje de programare');
+
+--ex4 -> p.3 la fel ca ex3
+
+--ex5 -> p.4 
+
+SELECT s.sid,s.nume FROM Student s WHERE EXISTS(SELECT ct.sid FROM Contract ct WHERE ct.sid=s.sid) AND fid='MEC';
+
+--ex6 -> p.5 la fel ca ex5
+
+--ex7 -> p.6
+
+SELECT s.nume,s.media FROM Student s WHERE s.fid='AC' AND s.media > (SELECT media FROM Student WHERE nume LIKE 'Emanuel Petrescu');
+
+--ex8 -> p.7 la fel ca ex 3
+
+--ex9 -> p.8 la fel ca ex 7
+
+--ex10 -> p.9 la fel ca ex 5
+
+--ex11 -> p.10 la fel ca ex 2
+
+--ex12 -> p.11 la fel ca ex 5
+
+--ex13 -> p.12 la fel ca ex 2
+
+--ex14 -> p.13
+
+SELECT f.nume,f.fid FROM Facultate f WHERE NOT EXISTS (SELECT s.media FROM Student s WHERE s.media<5.5 AND s.fid=f.fid);
