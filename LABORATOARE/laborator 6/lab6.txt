@@ -1,0 +1,35 @@
+--ex1
+
+SELECT s1.sid,s1.nume,s1.an,s1.bursa FROM Student s1
+ WHERE s1.bursa <750 AND s1.bursa >0 and s1.bursa IS NOT NULL
+UNION
+SELECT s2.sid,s2.nume,s2.an,s2.bursa FROM Student s2
+ WHERE s2.bursa >900 AND s2.bursa> 0 and s2.bursa IS NOT NULL
+
+ --ex2
+
+SELECT sid, nume, an, bursa FROM Student WHERE bursa IN (bursa < 750 AND bursa > 0) OR (bursa > 900 AND bursa > 0) AND bursa IS NOT NULL;
+
+--ex3
+
+SELECT sid,nume,an,bursa FROM Student WHERE bursa=(SELECT MIN(bursa) FROM Student WHERE bursa>0)
+UNION
+SELECT sid,nume,an,bursa FROM Student WHERE bursa=(SELECT MAX(bursa) FROM Student WHERE bursa>0)
+
+--ex4
+
+SELECT f.fid,f.nume,f.adr FROM Facultate f WHERE f.fid IN(SELECT c.fid FROM Curs c JOIN sala s ON c.sala=s.cods WHERE s.etaj=1 
+INTERSECT
+SELECT c.fid FROM Curs c JOIN Sala s on c.sala=s.cods WHERE s.etaj=2)
+
+--ex5
+
+SELECT sid,nume,an,bursa FROM Student s WHERE bursa is NULL OR bursa=0
+INTERSECT
+SELECT s.sid,s.nume,s.an,s.bursa FROM Student s JOIN Contract ct on ct.sid=s.sid JOIN Curs c ON ct.cid=c.cid WHERE c.sala LIKE 'A101'
+
+--ex6
+
+SELECT s.sid,s.nume,s.bursa,s.an FROM student s WHERE s.fid=(SELECT f.fid FROM facultate f WHERE f.tel='0256-403211')
+MINUS
+SELECT s.sid,s.nume,s.bursa,s.an FROM student s JOIN contract ct ON s.sid=ct.sid JOIN curs c ON ct.cid=c.cid JOIN profesor p ON c.pid=p.pid WHERE p.nume='Ciprian Porumbescu'

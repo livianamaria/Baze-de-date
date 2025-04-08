@@ -1,0 +1,35 @@
+--ex1
+
+SELECT COUNT(*) AS NRSTUDENTI FROM Student WHERE bursa=0 AND media>7.5;  
+
+--ex2
+
+SELECT COUNT(*) AS NRSTUDENTI FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid JOIN Profesor p ON c.pid=p.pid WHERE p.nume='Luca Caragiale';
+
+--ex3
+
+SELECT COUNT(*) AS NRSTUDENTI FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid JOIN Sala sl ON c.sala=sl.cods WHERE sl.etaj=1;
+
+--ex4
+
+SELECT MIN(datan) AS tanar, MAX(datan) AS batran FROM Student WHERE an=2;
+
+--ex5
+
+SELECT f.nume AS NUME_FACULTATE,s.an,SUM(s.bursa) AS SUMA_BURSELOR, AVG(s.bursa) AS MEDIA_BURSELOR FROM Student s JOIN Facultate f ON s.fid=f.fid GROUP BY f.nume,s.an ORDER BY f.nume,s.an;
+
+--ex6
+
+SELECT MIN(bursa) AS BURSA_MINIMA,AVG(bursa) AS BURSA_MEDIE, MAX(bursa) AS BURSA_MAXIMA FROM Student s JOIN Contract ct ON s.sid=ct.sid JOIN Curs c ON ct.cid=c.cid WHERE c.zi='Luni' AND s.bursa>0
+
+--ex7
+
+SELECT s.nume,s.bursa FROM Student s WHERE EXISTS(SELECT s.bursa FROM Student WHERE s.bursa>(SELECT AVG(bursa) FROM Student))
+
+--ex8
+
+SELECT f.nume,trunc(avg(media),2)-trunc(stddev(media),2) AS m1, trunc(avg(media),2) + trunc(stddev(media),2) AS m2, AVG(s.media)-stddev(s.media) AS PRAG_JOS,AVG(s.media)+stddev(s.media) AS PRAG_SUS FROM Facultate f JOIN Student s ON s.fid=f.fid GROUP BY f.nume;
+
+--ex9
+
+SELECT s.sid, s.nume, s.media FROM Student s WHERE s.media < ( SELECT trunc(avg(media), 2) - trunc(stddev(media), 2) FROM Student) OR s.media > (SELECT trunc(avg(media), 2) + trunc(stddev(media), 2) FROM Student);

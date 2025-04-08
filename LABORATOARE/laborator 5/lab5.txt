@@ -1,0 +1,19 @@
+--nu este complet, mai trebuiau 2 exercitii rezolvate
+
+SELECT * FROM Student;
+
+--ex1 
+
+SELECT s.sid,s.nume,s.media,s.fid FROM Student s WHERE s.media < (SELECT media FROM Student WHERE cnp='1021205355288') AND fid='AC';
+
+--ex2
+
+SELECT s.sid,s.nume,s.bursa,s.fid FROM Student s WHERE s.bursa=(SELECT MIN(bursa) FROM Student WHERE bursa IS NOT NULL and bursa!=0 ) AND fid='AC';
+
+--ex3
+
+SELECT titlu,sala,(SELECT nrlocuri FROM Sala WHERE cods=curs.sala) AS nrlocuri FROM Curs WHERE sala IN (SELECT cods FROM Sala WHERE nrlocuri>100);
+
+--ex4
+
+SELECT cods,nrlocuri FROM Sala WHERE cods IN (SELECT sala FROM Curs WHERE fid='MEC') AND cods IN (SELECT sala FROM Curs WHERE fid='AC');
