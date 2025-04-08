@@ -1,0 +1,119 @@
+SELECT * FROM Student;
+SELECT * FROM Contract;
+
+--ex1, 0 ??
+
+SELECT p1.pid,p1.fid FROM Profesor p1 WHERE p1.datan<'01/01/1980'
+MINUS
+SELECT p2.pid,p2.fid FROM Profesor p2 WHERE p2.grad='conf';
+
+--ex2, 1
+
+SELECT s1.sid,s1.nume FROM Student s1 WHERE s1.bursa=0 OR s1.bursa IS NULL
+UNION
+SELECT s2.sid,s2.nume FROM Student s2 WHERE s2.media<6.5;
+
+--ex3, 2
+
+SELECT c1.cid,c1.an FROM Curs c1 JOIN Profesor p ON c1.pid=p.pid WHERE p.grad='prof'
+MINUS
+SELECT c2.cid,c2.an FROM Curs c2 JOIN Facultate f ON c2.fid=f.fid WHERE c2.fid='AC';
+
+--ex4, 3
+
+SELECT f1.fid,f1.nume FROM Facultate f1 WHERE f1.fid IN (SELECT fid FROM Student WHERE substr(adr,instr(adr,',')+1) LIKE 'H%')
+UNION
+SELECT f2.fid,f2.nume FROM Facultate f2 WHERE f2.fid IN (SELECT fid FROM Profesor WHERE grad='prof');
+
+--ex5, 4
+
+SELECT c1.cid,c1.an FROM Curs c1 JOIN Facultate f ON c1.fid=f.fid WHERE c1.fid='AC'
+MINUS
+SELECT c2.cid,c2.an FROM Curs c2 JOIN Profesor p ON c2.pid=p.pid WHERE p.grad='conf';
+
+--ex6, 5
+
+SELECT p1.pid,p1.fid FROM Profesor p1 WHERE p1.datan<'01/01/1980'
+MINUS
+SELECT p2.pid,p2.fid FROM Profesor p2 WHERE p2.grad='conf'
+
+--ex7, 6
+
+SELECT s1.sid,s1.nume FROM Student s1 WHERE s1.bursa=0 OR s1.bursa IS NULL
+UNION
+SELECT s2.sid,s2.nume FROM Student s2 WHERE s2.media<6.5;
+
+--ex8, 7
+
+SELECT c1.cid,c1.an FROM Curs c1 JOIN Profesor p ON c1.pid=p.pid WHERE p.grad='prof'
+MINUS
+SELECT c2.cid,c2.an FROM Curs c2 JOIN Facultate f ON c2.fid=f.fid WHERE c2.fid='AC';
+
+--ex9, 8
+
+SELECT f1.fid,f1.nume FROM Facultate f1 WHERE f1.fid IN (SELECT fid FROM Student WHERE substr(adr,instr(adr,',')+1) LIKE 'H%')
+UNION 
+SELECT f2.fid,f2.nume FROM Facultate f2 WHERE f2.fid IN (SELECT fid FROM Profesor WHERE grad='prof');
+
+--ex10, 9
+
+SELECT c1.cid,c1.an FROM Curs c1 WHERE c1.fid='AC'
+MINUS
+SELECT c2.cid,c2.an FROM Curs c2 JOIN Profesor p ON c2.pid=p.pid WHERE p.grad='conf'
+
+--ex11, 10 ??
+
+SELECT c1.cid,c1.titlu FROM Curs c1 WHERE c1.fid = 'AC'
+MINUS
+SELECT c2.cid,c2.titlu FROM Curs c2 WHERE c2.zi LIKE 'Luni';
+
+--ex12, 11 ??
+
+SELECT s1.sid,s1.nume FROM Student s1 WHERE s1.media NOT BETWEEN 6 AND 7.8
+INTERSECT
+SELECT s2.sid,s2.nume FROM Student s2 JOIN Contract ct ON ct.sid=s2.sid WHERE ct.an='2021';
+
+--ex13, 12
+
+SELECT c1.cid,c1.an FROM Curs c1 JOIN Profesor p ON c1.pid=p.pid WHERE p.grad='prof'
+INTERSECT
+SELECT c2.cid,c2.an FROM Curs c2 WHERE c2.fid!='AC';
+
+--ex14, 13
+
+--VARIANTA CU SUBINTEROGARE SI APOI 2
+SELECT c1.cid,c1.titlu FROM Curs c1 WHERE c1.pid IN (SELECT pid FROM Profesor WHERE substr(nume,instr(nume,' ')+1) LIKE 'P%')
+INTERSECT
+SELECT c2.cid,c2.titlu FROM Curs c2 WHERE c2.fid IN (SELECT fid FROM Facultate WHERE fid IN (SELECT s.fid FROM Contract ct,Student s WHERE ct.sid=s.sid AND s.media>=9));
+
+--VARIANTA CU SUBINTEROGARE IN 2 SUBINTEROGARI
+SELECT c1.cid,c1.titlu FROM Curs c1 WHERE c1.pid IN (SELECT pid FROM Profesor WHERE substr(nume,instr(nume,' ')+1) LIKE 'P%')
+INTERSECT
+SELECT c2.cid,c2.titlu FROM Curs c2 WHERE c2.fid IN (SELECT fid FROM Facultate WHERE fid IN (SELECT fid FROM Contract ct WHERE fid IN (SELECT fid FROM Student s WHERE ct.sid=s.sid AND s.media>=9)));
+
+--CU NULL
+SELECT c1.cid,c1.titlu FROM Curs c1 WHERE c1.pid IN (SELECT pid FROM Profesor WHERE substr(nume,instr(nume,' ')+1) LIKE 'P%')
+INTERSECT
+SELECT c2.cid,c2.titlu FROM Curs c2 WHERE c2.fid IN (SELECT fid FROM Facultate WHERE fid IN (SELECT fid FROM Student s WHERE s.media>=9));
+
+--ex15, 14
+
+SELECT f1.fid,f1.nume FROM Facultate f1 WHERE f1.fid IN (SELECT fid FROM Student WHERE substr(adr,instr(adr,',')+1) LIKE 'H%')
+UNION
+SELECT f2.fid,f2.nume FROM Facultate f2 WHERE f2.fid IN (SELECT fid FROM Profesor WHERE grad='prof');
+
+--ex16, 15
+
+SELECT ct1.nrc,ct1.semestru FROM Contract ct1 WHERE ct1.nota>=8 AND ct1.nota IS NOT NULL
+UNION
+SELECT ct2.nrc,ct2.semestru FROM Contract ct2 WHERE ct2.semestru='2';
+
+
+--ex17, 16 --la fel ca ex 14
+
+--ex18, 17 -- la fel ca ex 8
+
+--ex19, 18 -- la fel ca ex 2
+
+
+
