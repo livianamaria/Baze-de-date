@@ -1,0 +1,64 @@
+SELECT * FROM Student;
+
+--ex1 - a
+
+SELECT grad, COUNT(*) AS nr_profesori FROM Profesor GROUP BY grad HAVING COUNT(*)>5;
+
+--ex1 - b
+
+SELECT an, VARIANCE(nota) FROM Contract WHERE semestru=1 GROUP BY an;
+
+--ex2 - a
+
+SELECT COUNT(*) As nr_cursuri FROM Curs WHERE semestru=1;
+
+--ex2 - b
+
+SELECT etaj,SUM(nrlocuri) AS nr_locuri FROM Sala GROUP BY etaj;
+
+--ex3
+
+SELECT an,trunc(AVG(nota),2) AS media FROM Contract WHERE semestru=2 GROUP BY an;
+
+--ex4
+
+SELECT etaj,SUM(nrlocuri) AS nr_locuri FROM Sala GROUP BY etaj;
+
+--ex5
+
+SELECT MIN(datan) FROM Student;
+
+--ex6 - a
+
+SELECT COUNT(titlu) FROM Curs WHERE semestru=1;
+
+--ex6 - b
+
+SELECT etaj,SUM(nrlocuri) AS nr_locuri FROM Sala GROUP BY etaj;
+
+--ex7 - a
+
+SELECT grad,COUNT(*) AS nr_profesori FROM Profesor GROUP BY grad HAVING COUNT(*)>5;
+
+--ex7 - b
+
+SELECT an,VARIANCE(nota) AS varianta FROM Contract WHERE semestru=1 GROUP BY an;
+
+--ex8
+
+SELECT an,VARIANCE(nota) AS varianta FROM Contract WHERE semestru=1 GROUP BY an;
+
+--ex9 - a
+
+SELECT COUNT(*) FROM Student WHERE media BETWEEN 7 AND 9;
+
+--ex9 - b
+
+SELECT grad,COUNT(*) AS nr_profesori FROM Profesor GROUP BY grad HAVING COUNT(*)>5;
+
+--IN PLUS
+
+SELECT MAX(datan) FROM Student;
+
+
+
