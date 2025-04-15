@@ -1,0 +1,11 @@
+--ex1
+
+SELECT an,trunc(AVG(nota),2) AS MEDIA_NOTELOR FROM Contract WHERE semestru=2 GROUP BY an;
+
+--ex2
+
+SELECT etaj,SUM(nrlocuri) AS nr_locuri FROM Sala GROUP BY etaj;
+
+--ex3 // enunturi sunt aproape identice, doar ca eu am avut cel mai tanar student
+
+SELECT MAX(datan) FROM Student;
